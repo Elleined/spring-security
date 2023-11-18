@@ -11,20 +11,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
 @RequiredArgsConstructor
-@RequestMapping("/users")
-public class UserController {
-
+@RestController
+@RequestMapping("/admin/users")
+public class AdminController {
     private final UserService userService;
 
     @PostMapping
-    public UserResponse save(@Valid @RequestBody UserRequest userRequest) {
+    public UserResponse saveUser(@Valid @RequestBody UserRequest userRequest) {
         User user = userService.save(userRequest);
         return UserResponse.builder()
                 .id(user.getId())
                 .email(user.getCredential().getEmail())
-                .password(user.getCredential().getPassword())
                 .build();
     }
 }

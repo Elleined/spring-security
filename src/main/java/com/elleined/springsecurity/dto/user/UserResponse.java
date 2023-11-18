@@ -10,6 +10,4 @@ public class UserResponse {
     private int id;
 
     private String email;
-
-    private String password;
 }

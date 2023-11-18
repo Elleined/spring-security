@@ -29,8 +29,11 @@ public class Credential {
 
     @ElementCollection
     @CollectionTable(
-            name = "tbl_user_authorities",
-            joinColumns = @JoinColumn(name = "user_id")
+            name = "tbl_user_roles",
+            joinColumns = @JoinColumn(
+                    name = "user_id",
+                    nullable = false
+            )
     )
-    private Set<String> authorities;
+    private Set<String> roles;
 }
