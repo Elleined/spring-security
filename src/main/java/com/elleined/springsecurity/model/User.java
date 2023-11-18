@@ -22,7 +22,14 @@ public class User {
     )
     private int id;
 
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
     @Embedded
     private Credential credential;
 
+    public enum Status {
+        APPROVED,
+        NOT_APPROVED
+    }
 }

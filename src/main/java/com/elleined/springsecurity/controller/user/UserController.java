@@ -24,6 +24,7 @@ public class UserController {
         return UserResponse.builder()
                 .id(user.getId())
                 .email(user.getCredential().getEmail())
+                .status(user.getStatus().name())
                 .build();
     }
 }

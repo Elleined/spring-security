@@ -27,7 +27,8 @@ public class Credential {
     )
     private String password;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
+    // @LazyCollection(LazyCollectionOption.FALSE)
     @CollectionTable(
             name = "tbl_user_roles",
             joinColumns = @JoinColumn(
@@ -35,5 +36,11 @@ public class Credential {
                     nullable = false
             )
     )
-    private Set<String> roles;
+    private Set<Role> roles;
+
+    public enum Role {
+        USER,
+        ADMIN,
+        DEVELOPER
+    }
 }

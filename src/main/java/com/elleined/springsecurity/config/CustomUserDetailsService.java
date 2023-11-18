@@ -27,11 +27,8 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (user == null) throw new UsernameNotFoundException("User with email of " + username + " does not exists!");
 
         Set<GrantedAuthority> roles = user.getCredential().getRoles().stream()
-                .map(SimpleGrantedAuthority::new)
+                .map(role -> new SimpleGrantedAuthority(role.name()))
                 .collect(Collectors.toSet());
-
-        System.out.println(user.getId());
-        roles.stream().map(GrantedAuthority::getAuthority).forEach(System.out::println);
 
         return new org.springframework.security.core.userdetails.User(
                 user.getCredential().getEmail(),
