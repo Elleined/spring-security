@@ -1,5 +1,8 @@
 package com.elleined.springsecurity.config;
 
+import com.elleined.springsecurity.service.UserService;
+import com.elleined.springsecurity.service.UserServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Role;
@@ -22,9 +25,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class WebConfig {
 
+    @Autowired
+    private UserService userService;
+
     @Bean
     public UserDetailsService userDetailsService() {
-        return new UserDetailsServiceImpl();
+        return new UserDetailsServiceImpl(userService);
     }
 
     @Bean
@@ -48,6 +54,7 @@ public class WebConfig {
                     auth.requestMatchers(HttpMethod.POST, "/users").permitAll();
                     auth.requestMatchers("/users/**").hasAnyRole("ADMIN", "USER");
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
+                    auth.anyRequest().authenticated();
                 })
                 .httpBasic(Customizer.withDefaults())
                 .build();
