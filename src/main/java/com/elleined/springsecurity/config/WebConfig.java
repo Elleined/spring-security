@@ -41,12 +41,14 @@ public class WebConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf(AbstractHttpConfigurer::disable)
+        return http.csrf(Customizer.withDefaults())
                 .authenticationProvider(authenticationProvider())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/").permitAll();
                     auth.requestMatchers("/users/**").hasAnyRole("ADMIN", "USER");
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
-                }).build();
+                })
+                .httpBasic(Customizer.withDefaults())
+                .build();
     }
 }
